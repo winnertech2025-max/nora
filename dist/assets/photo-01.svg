@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 720">
+  <rect width="980" height="720" fill="#f8f4ea"/>
+  <rect x="86" y="70" width="760" height="510" fill="#d7d7cc"/>
+  <circle cx="360" cy="300" r="136" fill="#e54d68" opacity=".76"/>
+  <rect x="470" y="152" width="248" height="330" fill="#22201f" opacity=".88"/>
+  <path d="M118 500c220-110 472-128 754-54" stroke="#fffaf2" stroke-width="38" fill="none"/>
+  <text x="80" y="660" fill="#e54d68" font-family="Montserrat,Arial" font-size="62" font-weight="800">photo notes</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760">
+  <defs><filter id="p"><feTurbulence baseFrequency=".55" numOctaves="4"/><feColorMatrix values="0 0 0 0 .95 0 0 0 0 .92 0 0 0 0 .86 0 0 0 .36 0"/></filter></defs>
+  <rect width="1100" height="760" fill="#faf6ed"/>
+  <rect width="1100" height="760" filter="url(#p)"/>
+  <path d="M77 124h844v468H77z" fill="#dce3df"/>
+  <path d="M140 512c182-258 376-354 584-288 128 41 210 142 252 304" fill="none" stroke="#e54d68" stroke-width="92" opacity=".78"/>
+  <path d="M206 160c140 150 204 314 191 492M768 111c-132 147-189 309-170 485" fill="none" stroke="#252323" stroke-width="22"/>
+  <rect x="748" y="468" width="254" height="158" fill="#c3a27e"/>
+  <text x="72" y="704" fill="#e54d68" font-family="Montserrat,Arial" font-size="58" font-weight="800">clothing as armor</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200">
+  <defs>
+    <filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0.89 0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 .25 0"/></filter>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7c7c0"/><stop offset=".45" stop-color="#d9e1dc"/><stop offset="1" stop-color="#30302f"/></linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="#f8f4ea"/>
+  <rect width="900" height="1200" filter="url(#n)" opacity=".65"/>
+  <path d="M104 94h692v1012H104z" fill="url(#g)" opacity=".92"/>
+  <path d="M170 250c160-60 296-46 420 44 112 82 118 226 48 332-60 88-190 136-314 85-148-61-230-208-154-461Z" fill="#e54d68" opacity=".76"/>
+  <path d="M316 204c94 84 114 206 88 372-20 132-16 258 48 387" fill="none" stroke="#242322" stroke-width="34" opacity=".8"/>
+  <path d="M145 870c216-74 414-92 615-46" fill="none" stroke="#f0f4f1" stroke-width="42" opacity=".95"/>
+  <path d="M260 750l315-454M304 904l240-300" stroke="#111" stroke-width="10" opacity=".55"/>
+  <text x="58" y="1134" fill="#e54d68" font-family="Montserrat,Arial" font-size="54" font-weight="800">cyber survivalism</text>
+</svg>

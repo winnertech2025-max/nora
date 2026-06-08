@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760">
+  <rect width="1100" height="760" fill="#f6f1e8"/>
+  <rect x="80" y="92" width="208" height="470" fill="#22201f"/><rect x="310" y="160" width="154" height="402" fill="#c4d3d7"/><rect x="500" y="66" width="246" height="496" fill="#e54d68" opacity=".82"/><rect x="780" y="214" width="230" height="348" fill="#d8c2a7"/>
+  <path d="M80 602h930M150 420c254-92 522-104 802-36" stroke="#22201f" stroke-width="18" fill="none"/>
+  <text x="68" y="696" fill="#e54d68" font-family="Montserrat,Arial" font-size="68" font-weight="800">ode to the city</text>
+</svg>

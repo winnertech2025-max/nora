@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1180">
+  <rect width="900" height="1180" fill="#fffaf2"/>
+  <rect x="94" y="86" width="712" height="930" fill="#d8dfda"/>
+  <path d="M282 358c0-130 96-226 212-226s198 96 198 226c0 78-33 147-84 190v270H354V548c-45-43-72-112-72-190Z" fill="#22201f"/>
+  <path d="M330 500c78 72 228 72 306 0v378H330z" fill="#e54d68" opacity=".84"/>
+  <path d="M276 906c124-70 270-82 440-34" stroke="#efe4d3" stroke-width="46" fill="none"/>
+  <text x="94" y="1090" fill="#e54d68" font-family="Montserrat,Arial" font-size="52" font-weight="800">nguyen minh hang</text>
+</svg>

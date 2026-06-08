@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1180">
+  <rect width="900" height="1180" fill="#eff1f0"/>
+  <rect x="92" y="96" width="716" height="900" fill="#efe1ce"/>
+  <path d="M250 306c72-172 336-164 404 10 72 184-50 420-205 542-172-134-268-368-199-552Z" fill="#e54d68" opacity=".82"/>
+  <path d="M208 700c160-66 322-80 486-43" fill="none" stroke="#111" stroke-width="20"/>
+  <path d="M452 182v740" stroke="#eff1f0" stroke-width="30"/>
+  <text x="118" y="1094" fill="#e54d68" font-family="Montserrat,Arial" font-size="62" font-weight="800">vessel of soul</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1180">
+  <rect width="900" height="1180" fill="#eff1f0"/>
+  <rect x="96" y="118" width="708" height="904" fill="#f3e5d4"/>
+  <path d="M272 436c22-150 332-150 354 0" fill="none" stroke="#22201f" stroke-width="24"/>
+  <path d="M214 420h470l-54 390H268z" fill="#e54d68" opacity=".84"/>
+  <path d="M250 530c122 52 262 52 402 0" fill="none" stroke="#eff1f0" stroke-width="20"/>
+  <text x="112" y="1100" fill="#e54d68" font-family="Montserrat,Arial" font-size="64" font-weight="800">bags / props</text>
+</svg>
