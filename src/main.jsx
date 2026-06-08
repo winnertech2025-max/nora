@@ -79,8 +79,7 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
   return (
     <header className="site-header">
       <button className="brand" onClick={() => navigate({ name: 'home' })} aria-label="go home">
-        <span>nguyen minh hang</span>
-        <span>nora wilde</span>
+        <img src="/assets/real/logo-web.png" alt="nguyen minh hang nora wilde" />
       </button>
       <nav className="desktop-nav" aria-label="primary">
         {categories.slice(0, 7).map((category) => (
@@ -203,7 +202,7 @@ function DraggablePrint({ print, index, navigate }) {
       onPointerCancel={endDrag}
       onClick={open}
     >
-      <img src={print.image} alt="" draggable="false" />
+      <img src={print.image} alt="" draggable="false" decoding="async" />
       <span className="print-title">
         {print.title}
         <ArrowUpRight size={18} />
@@ -218,7 +217,7 @@ function About() {
       <PageLabel eyebrow="about" title="an interdisciplinary fashion creative shaped by craft, culture and friction." />
       <div className="about-grid">
         <figure className="portrait-frame">
-          <img src="/assets/nora-portrait.svg" alt="Nora Wilde portrait collage" />
+          <img src="/assets/real/nora-0470.png" alt="Nora Wilde portrait" loading="lazy" decoding="async" />
           <figcaption>hanoi, vietnam / fashion, film, theatre, cultural production</figcaption>
         </figure>
         <div className="about-copy">
@@ -250,7 +249,7 @@ function CategoryPage({ slug, navigate }) {
               className={`project-tile tile-${index + 1}`}
               onClick={() => navigate({ name: 'project', slug: project.slug })}
             >
-              <img src={project.cover} alt="" />
+              <img src={project.cover} alt="" loading="lazy" decoding="async" />
               <span>
                 <strong>{project.title}</strong>
                 <em>{project.year}</em>
@@ -300,7 +299,7 @@ function HorizontalGallery({ project, setLightbox }) {
       <div className="horizontal-gallery">
         {project.gallery.map((image, index) => (
           <button key={`${project.slug}-${index}`} className="gallery-item" onClick={() => setLightbox(image)}>
-            <img src={image} alt="" />
+            <img src={image} alt="" loading="lazy" decoding="async" />
             <span>
               <Maximize2 size={15} />
             </span>
