@@ -1,17 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Download,
-  Instagram,
-  Linkedin,
-  Mail,
-  Maximize2,
-  Menu,
-  Send,
-  X,
-} from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Download, Facebook, Instagram, Linkedin, Maximize2, Menu, X } from 'lucide-react';
 import { categories, featuredPrints, profile, projects } from './portfolioData.js';
 import './styles.css';
 
@@ -56,7 +45,7 @@ function App() {
   };
 
   return (
-    <div className="site-shell">
+    <div className={`site-shell route-${route.name}`}>
       <Header route={route} menuOpen={menuOpen} setMenuOpen={setMenuOpen} navigate={navigate} />
       <main>
         {route.name === 'home' && <Home navigate={navigate} />}
@@ -65,12 +54,20 @@ function App() {
         {route.name === 'category' && <CategoryPage slug={route.slug} navigate={navigate} />}
         {route.name === 'project' && <ProjectPage slug={route.slug} navigate={navigate} />}
       </main>
-      <CursorWash />
     </div>
   );
 }
 
 function Header({ route, menuOpen, setMenuOpen, navigate }) {
+  const navCategories = [
+    'fashion-costume',
+    'creative-direction',
+    'props-accessories',
+    'research',
+    'visual-art',
+    'photography',
+    'writing',
+  ].map(findCategory);
   const navItems = [
     { label: 'about', route: { name: 'about' } },
     { label: 'contact', route: { name: 'contact' } },
@@ -80,9 +77,10 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
     <header className="site-header">
       <button className="brand" onClick={() => navigate({ name: 'home' })} aria-label="go home">
         <img src="/assets/real/logo-web.png" alt="nguyen minh hang nora wilde" />
+        <span>nguyen minh hang</span>
       </button>
       <nav className="desktop-nav" aria-label="primary">
-        {categories.slice(0, 7).map((category) => (
+        {navCategories.map((category) => (
           <button
             key={category.slug}
             className={route.slug === category.slug ? 'is-active' : ''}
@@ -101,7 +99,7 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
         {menuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
       <div className={`mobile-panel ${menuOpen ? 'open' : ''}`}>
-        {[...categories, ...navItems].map((item) => (
+        {[...navCategories, ...navItems].map((item) => (
           <button
             key={item.slug || item.label}
             onClick={() => navigate(item.route || { name: 'category', slug: item.slug })}
@@ -117,10 +115,6 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
 function Home({ navigate }) {
   return (
     <section className="home-stage">
-      <div className="home-intro">
-        <p>fashion & costume / creative direction / visual storytelling</p>
-        <h1>nora wilde</h1>
-      </div>
       <ScatteredWall navigate={navigate} />
       <div className="home-footer-note">
         <span>drag the prints</span>
@@ -149,6 +143,7 @@ function DraggablePrint({ print, index, navigate }) {
 
   const beginDrag = (event) => {
     event.preventDefault();
+    event.currentTarget.setPointerCapture?.(event.pointerId);
     setDragging(true);
     movedRef.current = false;
     setStart({
@@ -171,7 +166,8 @@ function DraggablePrint({ print, index, navigate }) {
     setOffset(nextOffset);
   };
 
-  const endDrag = () => {
+  const endDrag = (event) => {
+    event.currentTarget.releasePointerCapture?.(event.pointerId);
     setDragging(false);
     setStart(null);
   };
@@ -181,6 +177,10 @@ function DraggablePrint({ print, index, navigate }) {
       window.setTimeout(() => {
         movedRef.current = false;
       }, 0);
+      return;
+    }
+    if (print.route) {
+      navigate(print.route);
       return;
     }
     navigate(print.projectSlug ? { name: 'project', slug: print.projectSlug } : { name: 'category', slug: print.categorySlug });
@@ -213,18 +213,22 @@ function DraggablePrint({ print, index, navigate }) {
 
 function About() {
   return (
-    <section className="page about-page">
-      <PageLabel eyebrow="about" title="an interdisciplinary fashion creative shaped by craft, culture and friction." />
+    <section className="page about-page mock-page">
       <div className="about-grid">
-        <figure className="portrait-frame">
-          <img src="/assets/real/nora-0470.png" alt="Nora Wilde portrait" loading="lazy" decoding="async" />
-          <figcaption>hanoi, vietnam / fashion, film, theatre, cultural production</figcaption>
-        </figure>
         <div className="about-copy">
+          <h1>about</h1>
           {profile.bio.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
+        <figure className="portrait-frame">
+          <img src="/assets/real/minhhang.png" alt="Nora Wilde portrait" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+      <div className="about-band" aria-hidden="true">
+        {['/assets/real/img-1734.png', '/assets/real/img-2340.png', '/assets/real/img-9027.png'].map((image) => (
+          <img key={image} src={image} alt="" loading="lazy" decoding="async" />
+        ))}
       </div>
     </section>
   );
@@ -232,7 +236,19 @@ function About() {
 
 function CategoryPage({ slug, navigate }) {
   const category = findCategory(slug) || categories[0];
-  const categoryProjects = projects.filter((project) => project.category === category.slug);
+  const categoryPrint = featuredPrints.find((print) => print.categorySlug === category.slug);
+  const categoryProjects =
+    category.slug === 'fashion-costume'
+      ? projects.filter((project) => project.slug === 'cyber-survivalism')
+      : [
+          {
+            slug: `${category.slug}-standby`,
+            title: category.title,
+            year: 'standby',
+            cover: categoryPrint?.image || '/assets/real/portrait-transparent.png',
+            isStandby: true,
+          },
+        ];
 
   return (
     <section className="page category-page">
@@ -240,14 +256,14 @@ function CategoryPage({ slug, navigate }) {
       <div className="category-layout">
         <aside className="category-note">
           <p>{category.description}</p>
-          <span>{categoryProjects.length || 'open'} entries</span>
+          <span>{categoryProjects.length || 'standby'} entries</span>
         </aside>
         <div className="project-mosaic">
           {categoryProjects.map((project, index) => (
             <button
               key={project.slug}
-              className={`project-tile tile-${index + 1}`}
-              onClick={() => navigate({ name: 'project', slug: project.slug })}
+              className={`project-tile tile-${index + 1} ${project.isStandby ? 'is-standby' : ''}`}
+              onClick={() => !project.isStandby && navigate({ name: 'project', slug: project.slug })}
             >
               <img src={project.cover} alt="" loading="lazy" decoding="async" />
               <span>
@@ -336,43 +352,43 @@ function Credits({ credits }) {
 
 function Contact() {
   return (
-    <section className="page contact-page">
-      <PageLabel eyebrow="contact" title="for commissions, collaborations and soft chaos with intention." />
-      <div className="contact-grid">
-        <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+    <section className="page contact-page mock-page">
+      <h1 className="contact-title">contact</h1>
+      <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+        <p className="contact-label">email</p>
+        <div className="contact-input-row">
           <label>
-            <span>name</span>
-            <input type="text" placeholder="your name" />
+            <input type="text" placeholder="Name" />
           </label>
           <label>
-            <span>email</span>
-            <input type="email" placeholder="you@example.com" />
+            <input type="email" placeholder="Email Address" />
           </label>
-          <label>
-            <span>message</span>
-            <textarea placeholder="tell nora about the project" rows="6" />
-          </label>
-          <button type="submit">
-            <Send size={18} />
-            send
-          </button>
-        </form>
-        <div className="contact-card">
-          <a href="mailto:nguyenminhhang.norawilde@gmail.com">
-            <Mail size={18} />
-            nguyenminhhang.norawilde@gmail.com
-          </a>
-          <a href="#" aria-label="instagram">
-            <Instagram size={18} />
-            instagram
-          </a>
-          <a href="#" aria-label="linkedin">
-            <Linkedin size={18} />
-            linkedin
-          </a>
+        </div>
+        <label>
+          <textarea aria-label="message" placeholder="Message" rows="6" />
+        </label>
+        <button type="submit">submit</button>
+      </form>
+      <div className="contact-lower">
+        <div className="contact-card social-card">
+          <p>follow</p>
+          <div className="social-row">
+            <a href="#" aria-label="instagram">
+              <Instagram size={34} />
+            </a>
+            <a href="#" aria-label="facebook">
+              <Facebook size={34} />
+            </a>
+            <a href="#" aria-label="linkedin">
+              <Linkedin size={34} />
+            </a>
+          </div>
+        </div>
+        <div className="contact-card cv-card">
+          <p>cv</p>
           <a href="/assets/nora-wilde-cv-placeholder.pdf" download>
             <Download size={18} />
-            download cv
+            download
           </a>
         </div>
       </div>
@@ -398,11 +414,6 @@ function PageLabel({ eyebrow, title }) {
       <h1>{title}</h1>
     </div>
   );
-}
-
-function CursorWash() {
-  const style = useMemo(() => ({ '--delay': `${Math.random() * 2}s` }), []);
-  return <div className="cursor-wash" style={style} />;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
