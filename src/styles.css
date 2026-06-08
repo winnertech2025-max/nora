@@ -209,6 +209,48 @@ img {
   touch-action: none;
 }
 
+.route-home .print-card {
+  animation: print-reveal 920ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.route-home .print-1 { --enter-x: -72px; --enter-y: -24px; --enter-r: -5deg; animation-delay: 80ms; }
+.route-home .print-2 { --enter-x: -90px; --enter-y: 38px; --enter-r: 4deg; animation-delay: 170ms; }
+.route-home .print-3 { --enter-x: 46px; --enter-y: -70px; --enter-r: 5deg; animation-delay: 20ms; }
+.route-home .print-4 { --enter-x: -54px; --enter-y: 78px; --enter-r: -3deg; animation-delay: 260ms; }
+.route-home .print-5 { --enter-x: 0px; --enter-y: 42px; --enter-r: 0deg; animation-delay: 320ms; }
+.route-home .print-6 { --enter-x: 70px; --enter-y: 18px; --enter-r: -6deg; animation-delay: 390ms; }
+.route-home .print-7 { --enter-x: -18px; --enter-y: 86px; --enter-r: 3deg; animation-delay: 470ms; }
+.route-home .print-8 { --enter-x: 72px; --enter-y: 66px; --enter-r: 2deg; animation-delay: 540ms; }
+.route-home .print-9 { --enter-x: 94px; --enter-y: -20px; --enter-r: 5deg; animation-delay: 230ms; }
+
+@keyframes print-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px) saturate(0.9);
+    transform:
+      translate3d(calc(var(--x) + var(--enter-x)), calc(var(--y) + var(--enter-y)), 0)
+      rotate(calc(var(--r) + var(--enter-r)))
+      scale(0.88);
+  }
+
+  64% {
+    opacity: 1;
+    filter: blur(0) saturate(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0) saturate(1);
+    transform: translate3d(var(--x), var(--y), 0) rotate(var(--r)) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-home .print-card {
+    animation: none;
+  }
+}
+
 .print-card img {
   width: 100%;
   box-shadow: 0 12px 28px rgba(27, 21, 20, 0.14);
@@ -229,6 +271,7 @@ img {
 
 .print-card.dragging {
   cursor: grabbing;
+  animation: none;
   transition: none;
 }
 
@@ -1221,15 +1264,15 @@ textarea:focus-visible {
   display: grid;
   min-height: 100vh;
   place-items: center;
-  padding: 72px 0 74px;
+  padding: 96px 0 74px;
 }
 
 .scattered-wall {
-  width: 720px;
-  height: 486px;
-  min-height: 486px;
+  width: 900px;
+  height: 620px;
+  min-height: 620px;
   margin: 0 auto;
-  transform: translateY(14px);
+  transform: translateY(0);
 }
 
 .home-footer-note {
@@ -1468,9 +1511,9 @@ textarea:focus-visible {
   }
 
   .scattered-wall {
-    width: 720px;
-    height: 486px;
-    min-height: 486px;
+    width: min(900px, 82vw);
+    height: min(620px, calc(100svh - 164px));
+    min-height: min(620px, calc(100svh - 164px));
   }
 
   .print-card {
@@ -1489,14 +1532,15 @@ textarea:focus-visible {
     transform: translateY(0);
   }
 
-  .print-1 { --x: 116px; --y: 226px; }
-  .print-2 { --x: 96px; --y: 336px; }
-  .print-3 { --x: 340px; --y: 40px; }
-  .print-4 { --x: 88px; --y: 90px; }
-  .print-5 { --x: 292px; --y: 58px; }
-  .print-6 { --x: 500px; --y: 238px; }
-  .print-7 { --x: 438px; --y: 346px; }
-  .print-8 { --x: 555px; --y: 160px; }
+  .print-1 { --x: 92px; --y: 88px; }
+  .print-2 { --x: 78px; --y: 260px; }
+  .print-3 { --x: 395px; --y: 38px; }
+  .print-4 { --x: 122px; --y: 388px; }
+  .print-5 { --x: 308px; --y: 82px; }
+  .print-6 { --x: 500px; --y: 242px; }
+  .print-7 { --x: 290px; --y: 342px; }
+  .print-8 { --x: 460px; --y: 395px; }
+  .print-9 { --x: 630px; --y: 180px; }
 }
 
 /* About page responsive mockup alignment */
