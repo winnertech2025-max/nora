@@ -4,8 +4,10 @@ import { ArrowLeft, ArrowUpRight, Download, Facebook, Instagram, Linkedin, Maxim
 import { categories, featuredPrints, profile, projects } from './portfolioData.js';
 import './styles.css';
 
+const visibleCategorySlugs = ['fashion-costume', 'creative-direction', 'props-accessories', 'research', 'visual-art'];
 const findCategory = (slug) => categories.find((category) => category.slug === slug);
 const findProject = (slug) => projects.find((project) => project.slug === slug);
+const projectsForCategory = (slug) => projects.filter((project) => project.category === slug);
 
 function parseHash() {
   const hash = window.location.hash.replace(/^#\/?/, '');
@@ -59,15 +61,7 @@ function App() {
 }
 
 function Header({ route, menuOpen, setMenuOpen, navigate }) {
-  const navCategories = [
-    'fashion-costume',
-    'creative-direction',
-    'props-accessories',
-    'research',
-    'visual-art',
-    'photography',
-    'writing',
-  ].map(findCategory);
+  const navCategories = visibleCategorySlugs.map(findCategory).filter(Boolean);
   const navItems = [
     { label: 'about', route: { name: 'about' } },
     { label: 'contact', route: { name: 'contact' } },
@@ -76,18 +70,12 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
   return (
     <header className="site-header">
       <button className="brand" onClick={() => navigate({ name: 'home' })} aria-label="go home">
-        <img src="/assets/real/logo-web.png" alt="nguyen minh hang nora wilde" />
+        <img src="/assets/real/logo-drive.png" alt="nguyen minh hang nora wilde" />
         <span>nguyen minh hang</span>
       </button>
       <nav className="desktop-nav" aria-label="primary">
         {navCategories.map((category) => (
-          <button
-            key={category.slug}
-            className={route.slug === category.slug ? 'is-active' : ''}
-            onClick={() => navigate({ name: 'category', slug: category.slug })}
-          >
-            {category.title}
-          </button>
+          <NavCategoryItem key={category.slug} category={category} route={route} navigate={navigate} />
         ))}
         {navItems.map((item) => (
           <button key={item.label} onClick={() => navigate(item.route)}>
@@ -112,30 +100,61 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
   );
 }
 
+function NavCategoryItem({ category, route, navigate }) {
+  const categoryProjects = projectsForCategory(category.slug);
+
+  return (
+    <div className="nav-category">
+      <button
+        className={route.slug === category.slug ? 'is-active' : ''}
+        onClick={() => navigate({ name: 'category', slug: category.slug })}
+      >
+        {category.title}
+      </button>
+      <div className="nav-project-menu">
+        {categoryProjects.length ? (
+          categoryProjects.map((project) => (
+            <button key={project.slug} onClick={() => navigate({ name: 'project', slug: project.slug })}>
+              {project.title}
+            </button>
+          ))
+        ) : (
+          <span>projects coming soon</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Home({ navigate }) {
   return (
     <section className="home-stage">
       <ScatteredWall navigate={navigate} />
-      <div className="home-footer-note">
-        <span>drag the prints</span>
-        <span>hover to reveal</span>
-        <span>click to enter</span>
-      </div>
+      <p className="home-footer-note">interdisciplinary fashion creative</p>
     </section>
   );
 }
 
 function ScatteredWall({ navigate }) {
+  const [selectedPrintId, setSelectedPrintId] = useState(null);
+
   return (
     <div className="scattered-wall" aria-label="interactive portfolio categories">
-      {featuredPrints.map((print, index) => (
-        <DraggablePrint key={print.id} print={print} index={index} navigate={navigate} />
+      {featuredPrints.filter((print) => !print.hidden).map((print, index) => (
+        <DraggablePrint
+          key={print.id}
+          print={print}
+          index={index}
+          isSelected={selectedPrintId === print.id}
+          navigate={navigate}
+          setSelectedPrintId={setSelectedPrintId}
+        />
       ))}
     </div>
   );
 }
 
-function DraggablePrint({ print, index, navigate }) {
+function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId }) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [start, setStart] = useState(null);
@@ -179,6 +198,10 @@ function DraggablePrint({ print, index, navigate }) {
       }, 0);
       return;
     }
+    if (!isSelected) {
+      setSelectedPrintId(print.id);
+      return;
+    }
     if (print.route) {
       navigate(print.route);
       return;
@@ -188,7 +211,7 @@ function DraggablePrint({ print, index, navigate }) {
 
   return (
     <button
-      className={`print-card print-${index + 1} ${dragging ? 'dragging' : ''}`}
+      className={`print-card print-${index + 1} ${isSelected ? 'is-selected' : ''} ${dragging ? 'dragging' : ''}`}
       style={{
         '--x': `${print.x + offset.x}px`,
         '--y': `${print.y + offset.y}px`,
@@ -237,43 +260,67 @@ function About() {
 function CategoryPage({ slug, navigate }) {
   const category = findCategory(slug) || categories[0];
   const categoryPrint = featuredPrints.find((print) => print.categorySlug === category.slug);
-  const categoryProjects =
-    category.slug === 'fashion-costume'
-      ? projects.filter((project) => project.slug === 'cyber-survivalism')
-      : [
-          {
-            slug: `${category.slug}-standby`,
-            title: category.title,
-            year: 'standby',
-            cover: categoryPrint?.image || '/assets/real/portrait-transparent.png',
-            isStandby: true,
-          },
-        ];
+  const [lightbox, setLightbox] = useState(null);
+  const categoryProjects = projectsForCategory(category.slug);
+  const standbyProjects = categoryProjects.length
+    ? categoryProjects
+    : [
+        {
+          slug: `${category.slug}-standby-1`,
+          title: category.title,
+          year: 'standby',
+          cover: categoryPrint?.image || '/assets/real/portrait-transparent.png',
+          isStandby: true,
+        },
+        {
+          slug: `${category.slug}-standby-2`,
+          title: category.title,
+          year: 'standby',
+          cover: '/assets/real/of-us-and-arts.png',
+          isStandby: true,
+        },
+        {
+          slug: `${category.slug}-standby-3`,
+          title: category.title,
+          year: 'standby',
+          cover: '/assets/real/vase-transparent.png',
+          isStandby: true,
+        },
+      ];
+  const description =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae arcu at nisi luctus posuere. Suspendisse potenti, sed tempor justo non massa interdum, in gravida sem facilisis.';
 
   return (
     <section className="page category-page">
-      <PageLabel eyebrow="projects" title={category.title} />
+      <PageLabel title={category.title} />
+      <p className="category-description">{description}</p>
       <div className="category-layout">
-        <aside className="category-note">
-          <p>{category.description}</p>
-          <span>{categoryProjects.length || 'standby'} entries</span>
-        </aside>
         <div className="project-mosaic">
-          {categoryProjects.map((project, index) => (
+          {standbyProjects.map((project, index) => (
             <button
               key={project.slug}
               className={`project-tile tile-${index + 1} ${project.isStandby ? 'is-standby' : ''}`}
-              onClick={() => !project.isStandby && navigate({ name: 'project', slug: project.slug })}
+              onClick={() => {
+                if (category.slug === 'visual-art') {
+                  setLightbox({ images: standbyProjects.map((item) => item.cover), index });
+                  return;
+                }
+                if (!project.isStandby) navigate({ name: 'project', slug: project.slug });
+              }}
             >
               <img src={project.cover} alt="" loading="lazy" decoding="async" />
-              <span>
-                <strong>{project.title}</strong>
-                <em>{project.year}</em>
-              </span>
             </button>
           ))}
         </div>
       </div>
+      {lightbox && (
+        <Lightbox
+          images={lightbox.images}
+          index={lightbox.index}
+          setIndex={(index) => setLightbox({ ...lightbox, index })}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </section>
   );
 }
@@ -281,6 +328,8 @@ function CategoryPage({ slug, navigate }) {
 function ProjectPage({ slug, navigate }) {
   const project = findProject(slug) || projects[0];
   const [lightbox, setLightbox] = useState(null);
+  const portfolioImages = project.gallery || [];
+  const photoshootImages = project.photoshoot || project.gallery || [];
 
   return (
     <section className="project-page">
@@ -289,32 +338,39 @@ function ProjectPage({ slug, navigate }) {
         back to {findCategory(project.category)?.title}
       </button>
       <div className="project-reader">
-        <aside className="project-sticky">
+        <header className="project-header-block">
           <p>{project.year}</p>
           <h1>{project.title}</h1>
           <h2>{project.subtitle}</h2>
-        </aside>
-        <article className="project-body">
           <p className="project-description">{project.description}</p>
-          <HorizontalGallery project={project} setLightbox={setLightbox} />
+        </header>
+        <article className="project-body">
+          <ImageGallery images={portfolioImages} label="portfolio pages" setLightbox={setLightbox} />
+          <ImageGallery images={photoshootImages} label="photoshoot" setLightbox={setLightbox} />
+          <FilmSection project={project} />
           <Credits credits={project.credits} />
         </article>
       </div>
-      {lightbox && <Lightbox image={lightbox} onClose={() => setLightbox(null)} />}
+      {lightbox && (
+        <Lightbox
+          images={lightbox.images}
+          index={lightbox.index}
+          setIndex={(index) => setLightbox({ ...lightbox, index })}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </section>
   );
 }
 
-function HorizontalGallery({ project, setLightbox }) {
+function ImageGallery({ images, label, setLightbox }) {
+  if (!images?.length) return null;
+
   return (
     <section className="gallery-section">
-      <div className="section-heading">
-        <span>portfolio pages</span>
-        <span>scroll sideways</span>
-      </div>
       <div className="horizontal-gallery">
-        {project.gallery.map((image, index) => (
-          <button key={`${project.slug}-${index}`} className="gallery-item" onClick={() => setLightbox(image)}>
+        {images.map((image, index) => (
+          <button key={`${label}-${image}-${index}`} className="gallery-item" onClick={() => setLightbox({ images, index })}>
             <img src={image} alt="" loading="lazy" decoding="async" />
             <span>
               <Maximize2 size={15} />
@@ -322,12 +378,19 @@ function HorizontalGallery({ project, setLightbox }) {
           </button>
         ))}
       </div>
-      {project.videoTitle && (
-        <div className="film-strip">
-          <span>{project.videoTitle}</span>
-          <div />
-        </div>
-      )}
+    </section>
+  );
+}
+
+function FilmSection({ project }) {
+  const filmUrl = project.filmUrl || 'https://youtube.com/@norawilde173?si=2VXX32pGI1B3fY15';
+
+  return (
+    <section className="film-section">
+      <a href={filmUrl} target="_blank" rel="noreferrer">
+        <span>{project.videoTitle || 'film'}</span>
+        <strong>watch on youtube</strong>
+      </a>
     </section>
   );
 }
@@ -354,18 +417,18 @@ function Contact() {
   return (
     <section className="page contact-page mock-page">
       <h1 className="contact-title">contact</h1>
-      <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+      <form className="contact-form" action="mailto:xnorawilde@gmail.com" method="post" encType="text/plain">
         <p className="contact-label">email</p>
         <div className="contact-input-row">
           <label>
-            <input type="text" placeholder="Name" />
+            <input name="name" type="text" placeholder="Name" />
           </label>
           <label>
-            <input type="email" placeholder="Email Address" />
+            <input name="email" type="email" placeholder="Email Address" />
           </label>
         </div>
         <label>
-          <textarea aria-label="message" placeholder="Message" rows="6" />
+          <textarea name="message" aria-label="message" placeholder="Message" rows="6" />
         </label>
         <button type="submit">submit</button>
       </form>
@@ -373,13 +436,13 @@ function Contact() {
         <div className="contact-card social-card">
           <p>follow</p>
           <div className="social-row">
-            <a href="#" aria-label="instagram">
+            <a href="https://www.instagram.com/ailenalein?igsh=bWV3bHRtMXo5OWIz&utm_source=qr" target="_blank" rel="noreferrer" aria-label="instagram">
               <Instagram size={34} />
             </a>
-            <a href="#" aria-label="facebook">
+            <a href="https://www.facebook.com/xnorawilde?" target="_blank" rel="noreferrer" aria-label="facebook">
               <Facebook size={34} />
             </a>
-            <a href="#" aria-label="linkedin">
+            <a href="https://www.linkedin.com/in/hằng-nguyễn-213874316?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" aria-label="linkedin">
               <Linkedin size={34} />
             </a>
           </div>
@@ -396,13 +459,36 @@ function Contact() {
   );
 }
 
-function Lightbox({ image, onClose }) {
+function Lightbox({ images, index, setIndex, onClose }) {
+  const image = images[index];
+  const previous = (event) => {
+    event.stopPropagation();
+    setIndex((index - 1 + images.length) % images.length);
+  };
+  const next = (event) => {
+    event.stopPropagation();
+    setIndex((index + 1) % images.length);
+  };
+
   return (
     <div className="lightbox" role="dialog" aria-modal="true" onClick={onClose}>
       <button aria-label="close full screen image">
         <X size={24} />
       </button>
-      <img src={image} alt="" />
+      {images.length > 1 && (
+        <button className="lightbox-nav lightbox-prev" aria-label="previous image" onClick={previous}>
+          <ArrowLeft size={22} />
+        </button>
+      )}
+      <figure onClick={(event) => event.stopPropagation()}>
+        <img src={image} alt="" />
+        <figcaption>{index + 1} / {images.length}</figcaption>
+      </figure>
+      {images.length > 1 && (
+        <button className="lightbox-nav lightbox-next" aria-label="next image" onClick={next}>
+          <ArrowUpRight size={22} />
+        </button>
+      )}
     </div>
   );
 }
@@ -410,7 +496,7 @@ function Lightbox({ image, onClose }) {
 function PageLabel({ eyebrow, title }) {
   return (
     <div className="page-label">
-      <p>{eyebrow}</p>
+      {eyebrow && <p>{eyebrow}</p>}
       <h1>{title}</h1>
     </div>
   );

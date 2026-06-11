@@ -64,7 +64,14 @@ export const projects = [
       '/assets/real/creative-future-25.png',
       '/assets/real/creative-future-27.png',
     ],
+    photoshoot: [
+      '/assets/real/img-1734.png',
+      '/assets/real/img-2340.png',
+      '/assets/real/img-9027.png',
+      '/assets/real/nora-12596.png',
+    ],
     videoTitle: 'fashion film',
+    filmUrl: 'https://youtube.com/@norawilde173?si=2VXX32pGI1B3fY15',
     description:
       'CYBER SURVIVALISM imagines a near-apocalyptic world where pollution overloaded the surface of the planet and resources became a scarcity - a world of nostalgia for a seemingly peaceful past and everlasting hope in a brighter future. Clothings surpass the mere meaning of personal statement to become an united political expression, questioning the social norms and challenging the status quo. Humanity scrapes all they could from landfills to shield themselves from the world - each became a soldier with their own armor. Rooted in the complex integration of sustainability, politics and technology in fashion; CYBER SURVIVALISM brought together retro futurism and cyberpunk aesthetic in an effort of capturing indomitable human spirits amid a doomed reality, through the language of recycled materials and funkiness.',
     credits: [
@@ -269,6 +276,7 @@ export const featuredPrints = [
     rotate: 0,
     width: 395,
     z: 6,
+    hidden: true,
   },
   {
     id: 'photo',
@@ -280,5 +288,6 @@ export const featuredPrints = [
     rotate: 0,
     width: 248,
     z: 7,
+    hidden: true,
   },
 ];
