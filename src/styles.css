@@ -2212,7 +2212,8 @@ textarea:focus-visible {
 
 .project-tile img,
 .gallery-item img {
-  object-fit: cover;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.42);
 }
 
 .gallery-section {

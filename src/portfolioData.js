@@ -31,7 +31,7 @@ export const categories = [
   },
   {
     slug: 'research',
-    title: 'research projects',
+    title: 'research',
     description: 'material culture, craft histories and field notes translated into image and garment systems.',
   },
   {
@@ -46,6 +46,97 @@ export const categories = [
   },
 ];
 
+const cyberPortfolio = [
+  '/assets/real/sheet/cyber-portfolio/website-portfolio-03.png',
+  '/assets/real/sheet/cyber-portfolio/website-portfolio-04.png',
+  '/assets/real/sheet/cyber-portfolio/website-portfolio-05.png',
+  '/assets/real/sheet/cyber-portfolio/website-portfolio-06.png',
+  '/assets/real/sheet/cyber-portfolio/website-portfolio-07.png',
+  '/assets/real/sheet/cyber-portfolio/website-portfolio-08.png',
+  '/assets/real/sheet/cyber-portfolio/website-portfolio-10.png',
+];
+
+const cyberPhotoshoot = [
+  '/assets/real/nora-term-4428.png',
+  '/assets/real/nora-term-4434.png',
+  '/assets/real/nora-term-4467.png',
+  '/assets/real/nora-term-4476.png',
+  '/assets/real/nora-term-4536.png',
+  '/assets/real/nora-term-4570.png',
+  '/assets/real/nora-term-4640.png',
+  '/assets/real/nora-term-4652.png',
+  '/assets/real/nora-term-4695.png',
+  '/assets/real/nora-term-4703.png',
+  '/assets/real/nora-term-4717.png',
+  '/assets/real/nora-term-4721.png',
+  '/assets/real/nora-term-4728.png',
+  '/assets/real/nora-term-4927-a.png',
+  '/assets/real/nora-term-4927-b.png',
+  '/assets/real/nora-term-4935.png',
+  '/assets/real/nora-term-4971.png',
+  '/assets/real/nora-term-5031.png',
+  '/assets/real/nora-term-5139.png',
+];
+
+const vesselPortfolio = [
+  '/assets/real/sheet/vessel-portfolio/website-portfolio-13.png',
+  '/assets/real/sheet/vessel-portfolio/website-portfolio-14.png',
+  '/assets/real/sheet/vessel-portfolio/website-portfolio-15.png',
+  '/assets/real/sheet/vessel-portfolio/website-portfolio-16.png',
+  '/assets/real/sheet/vessel-portfolio/website-portfolio-17.png',
+  '/assets/real/sheet/vessel-portfolio/website-portfolio-18.png',
+  '/assets/real/sheet/vessel-portfolio/website-portfolio-19.png',
+];
+
+const vesselPhotoshoot = [
+  '/assets/real/sheet/vessel-photoshoot/nora-0001-1.jpeg',
+  '/assets/real/sheet/vessel-photoshoot/nora-0059.jpeg',
+  '/assets/real/sheet/vessel-photoshoot/nora-0152.jpeg',
+  '/assets/real/sheet/vessel-photoshoot/nora-0191.jpeg',
+  '/assets/real/sheet/vessel-photoshoot/nora-0350.jpeg',
+  '/assets/real/sheet/vessel-photoshoot/nora-0414.jpeg',
+  '/assets/real/sheet/vessel-photoshoot/nora-0442.jpeg',
+  '/assets/real/sheet/vessel-photoshoot/nora-0459.jpeg',
+];
+
+const odePortfolio = [
+  '/assets/real/sheet/ode-portfolio/website-portfolio-22.png',
+  '/assets/real/sheet/ode-portfolio/website-portfolio-23.png',
+  '/assets/real/sheet/ode-portfolio/website-portfolio-24.png',
+  '/assets/real/sheet/ode-portfolio/website-portfolio-25.png',
+  '/assets/real/sheet/ode-portfolio/website-portfolio-26.png',
+  '/assets/real/sheet/ode-portfolio/website-portfolio-27.png',
+  '/assets/real/sheet/ode-portfolio/website-portfolio-28.png',
+  '/assets/real/sheet/ode-portfolio/website-portfolio-29.png',
+];
+
+const odePhotoshoot = [
+  '/assets/real/sheet/ode-photoshoot/01.png',
+  '/assets/real/sheet/ode-photoshoot/02.png',
+  '/assets/real/sheet/ode-photoshoot/03.png',
+  '/assets/real/sheet/ode-photoshoot/04.png',
+  '/assets/real/sheet/ode-photoshoot/05.png',
+  '/assets/real/sheet/ode-photoshoot/06.png',
+];
+
+const ballPointGallery = [
+  '/assets/real/sheet/visual-ballpoint/cover.png',
+  '/assets/real/sheet/visual-ballpoint/img-2175.jpeg',
+  '/assets/real/sheet/visual-ballpoint/img-2176.jpeg',
+  '/assets/real/sheet/visual-ballpoint/img-2177.jpeg',
+  '/assets/real/sheet/visual-ballpoint/img-2517-original.jpeg',
+  '/assets/real/sheet/visual-ballpoint/img-5188.jpeg',
+];
+
+const coloredGallery = [
+  '/assets/real/sheet/visual-colored/cover.png',
+  '/assets/real/sheet/visual-colored/img-0655-original.jpeg',
+  '/assets/real/sheet/visual-colored/img-1593-original.jpeg',
+  '/assets/real/sheet/visual-colored/img-2181.jpeg',
+  '/assets/real/sheet/visual-colored/img-2182.jpeg',
+  '/assets/real/sheet/visual-colored/img-2183.jpeg',
+];
+
 export const projects = [
   {
     slug: 'cyber-survivalism',
@@ -53,25 +144,12 @@ export const projects = [
     title: 'cyber survivalism',
     subtitle: 'soft tailoring project - 2025',
     year: '2025',
-    cover: '/assets/real/creative-future-19.png',
-    gallery: [
-      '/assets/real/sheet/cyber-portfolio/website-portfolio-03.png',
-      '/assets/real/sheet/cyber-portfolio/website-portfolio-04.png',
-      '/assets/real/sheet/cyber-portfolio/website-portfolio-05.png',
-      '/assets/real/sheet/cyber-portfolio/website-portfolio-06.png',
-      '/assets/real/sheet/cyber-portfolio/website-portfolio-07.png',
-      '/assets/real/sheet/cyber-portfolio/website-portfolio-08.png',
-      '/assets/real/sheet/cyber-portfolio/website-portfolio-10.png',
-    ],
-    photoshoot: [
-      '/assets/real/img-1734.png',
-      '/assets/real/img-2340.png',
-      '/assets/real/img-9027.png',
-      '/assets/real/nora-12596.png',
-    ],
+    cover: cyberPortfolio[0],
+    gallery: cyberPortfolio,
+    photoshoot: cyberPhotoshoot,
     videoTitle: 'fashion film',
     filmUrl: 'https://youtu.be/vU_7N2FZ4QQ?si=qAj5qpWyS7lO3UNB',
-    filmThumbnail: '/assets/real/creative-future-19.png',
+    filmThumbnail: cyberPortfolio[0],
     description:
       'CYBER SURVIVALISM imagines a near-apocalyptic world where pollution overloaded the surface of the planet and resources became a scarcity - a world of nostalgia for a seemingly peaceful past and everlasting hope in a brighter future. Clothings surpass the mere meaning of personal statement to become an united political expression, questioning the social norms and challenging the status quo. Humanity scrapes all they could from landfills to shield themselves from the world - each became a soldier with their own armor. Rooted in the complex integration of sustainability, politics and technology in fashion; CYBER SURVIVALISM brought together retro futurism and cyberpunk aesthetic in an effort of capturing indomitable human spirits amid a doomed reality, through the language of recycled materials and funkiness.',
     credits: [
@@ -107,12 +185,12 @@ export const projects = [
     title: 'vessel of soul',
     subtitle: 'evening wear project - 2025',
     year: '2025',
-    cover: '/assets/real/img-4550.png',
-    gallery: ['/assets/real/img-4550.png', '/assets/real/img-9027.png', '/assets/real/nora-12596.png'],
-    photoshoot: ['/assets/real/img-4550.png', '/assets/real/img-1734.png', '/assets/real/img-9027.png'],
+    cover: vesselPortfolio[0],
+    gallery: vesselPortfolio,
+    photoshoot: vesselPhotoshoot,
     videoTitle: 'fashion film',
     filmUrl: 'https://youtu.be/jWnNC52O35o?si=C3VCU1the76ghUop',
-    filmThumbnail: '/assets/real/img-4550.png',
+    filmThumbnail: vesselPortfolio[0],
     description:
       'Plato’s “Symposium” recorded an ancient Aristophanes’ story on the myth of the soulmates: Humankind were originally sculpted with 4 arms, 4 legs, and a head of 2 faces - they were created as a whole. Fearing the swelling power lurking in these harmonious beings, Zeus halved each human, dividing one soul between two bodies. Vessel of Soul emerged from my interpretation of the story, hoping to redefine soulmate as an intermingling of journeys to unity - a balancing point of desire, solace, tranquility and fullness within oneself, and towards the world.',
     credits: [
@@ -138,11 +216,12 @@ export const projects = [
     title: 'ode to the city',
     subtitle: 'streetwear project - 2025',
     year: '2025',
-    cover: '/assets/real/2.png',
-    gallery: ['/assets/real/2.png', '/assets/real/png-drive.png', '/assets/real/img-9027.png'],
+    cover: odePortfolio[0],
+    gallery: odePortfolio,
+    photoshoot: odePhotoshoot,
     videoTitle: 'short film',
     filmUrl: 'https://youtu.be/LF3Y9lXnubM?si=619JAJko72gO8fbe',
-    filmThumbnail: '/assets/real/2.png',
+    filmThumbnail: odePortfolio[0],
     description:
       'Formed through unique and diverse historical interchanges, Hanoi cultural landscape is trademarked by the parallel dynamic of East & West - past & future. Through the language of streetwear, Ode to the City celebrates the beauty of Hanoi as the fruitful and inimitable cradle of young artists on the raise, fusing local music memories, 70s punk fashion and meticulous traditional Hmong textiles.',
     credits: [
@@ -177,8 +256,8 @@ export const projects = [
     title: 'ball-point pen series',
     subtitle: 'pen on paper drawings - 2021-2023',
     year: '2021-2023',
-    cover: '/assets/real/img-6962.png',
-    gallery: ['/assets/real/img-6962.png', '/assets/real/img-6961.png', '/assets/real/png-drive.png'],
+    cover: ballPointGallery[0],
+    gallery: ballPointGallery,
     description:
       'A collection of drawings using ball-point pen made during the on-and-off lockdown periods of my high school days.',
     credits: [['drawing', 'Nora Wilde']],
@@ -189,8 +268,8 @@ export const projects = [
     title: 'colored series',
     subtitle: 'colored paintings - 2021-2023',
     year: '2021-2024',
-    cover: '/assets/real/png-drive.png',
-    gallery: ['/assets/real/png-drive.png', '/assets/real/2.png', '/assets/real/img-6961.png'],
+    cover: coloredGallery[0],
+    gallery: coloredGallery,
     description:
       'A collection of acrylic and watercolor paintings made during the on-and-off lockdown periods of my high school days.',
     credits: [['painting', 'Nora Wilde']],
