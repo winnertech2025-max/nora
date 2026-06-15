@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1180">
-  <rect width="900" height="1180" fill="#f7f1e7"/>
-  <path d="M128 94h644v962H128z" fill="#d9e2de"/>
-  <path d="M236 214h240v640H236z" fill="#e54d68" opacity=".72"/>
-  <path d="M390 180c120 120 148 296 84 528-30 108-22 210 52 308" fill="none" stroke="#232120" stroke-width="30"/>
-  <path d="M632 110c-106 230-112 496-18 798" fill="none" stroke="#fffaf2" stroke-width="48" opacity=".9"/>
-  <text x="82" y="1110" fill="#e54d68" font-family="Montserrat,Arial" font-size="48" font-weight="800">alienation &amp; belonging</text>
-</svg>
