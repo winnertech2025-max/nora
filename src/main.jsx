@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowUpRight, Download, Facebook, Instagram, Linkedin, Maxim
 import { categories, featuredPrints, profile, projects } from './portfolioData.js';
 import './styles.css';
 
-const visibleCategorySlugs = ['fashion-costume', 'creative-direction', 'props-accessories', 'research', 'visual-art'];
+const visibleCategorySlugs = ['fashion-costume', 'creative-direction', 'research', 'visual-art'];
 const findCategory = (slug) => categories.find((category) => category.slug === slug);
 const findProject = (slug) => projects.find((project) => project.slug === slug);
 const projectsForCategory = (slug) => projects.filter((project) => project.category === slug);
@@ -384,12 +384,21 @@ function ImageGallery({ images, label, setLightbox }) {
 
 function FilmSection({ project }) {
   const filmUrl = project.filmUrl || 'https://youtube.com/@norawilde173?si=2VXX32pGI1B3fY15';
+  const thumbnail = project.filmThumbnail || project.cover || project.gallery?.[0];
 
   return (
     <section className="film-section">
       <a href={filmUrl} target="_blank" rel="noreferrer">
-        <span>{project.videoTitle || 'film'}</span>
-        <strong>watch on youtube</strong>
+        {thumbnail && (
+          <figure>
+            <img src={thumbnail} alt="" loading="lazy" decoding="async" />
+            <span>play</span>
+          </figure>
+        )}
+        <div>
+          <p>{project.videoTitle || 'film'}</p>
+          <strong>watch on youtube</strong>
+        </div>
       </a>
     </section>
   );

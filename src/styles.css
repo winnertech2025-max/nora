@@ -2169,3 +2169,215 @@ textarea:focus-visible {
     grid-auto-columns: minmax(260px, 86vw);
   }
 }
+
+/* 2026-06-16 feedback: contact, A3 grids, film thumbnails */
+.desktop-nav {
+  grid-template-columns: repeat(4, minmax(116px, 1fr)) 1fr 0.8fr 0.8fr;
+}
+
+.site-shell.route-contact .contact-title {
+  margin-bottom: clamp(6px, 0.8vw, 14px);
+}
+
+.site-shell.route-contact .contact-label {
+  position: static;
+  margin-bottom: clamp(8px, 0.8vw, 14px);
+}
+
+.site-shell.route-contact .contact-form {
+  width: min(86vw, 1500px);
+  padding: 0;
+  background: transparent;
+}
+
+.site-shell.route-contact .contact-input-row {
+  margin-top: 0;
+}
+
+.site-shell.route-contact .contact-form input,
+.site-shell.route-contact .contact-form textarea {
+  background: transparent;
+}
+
+.project-tile,
+.project-tile:nth-child(2n),
+.project-tile:nth-child(3n),
+.gallery-item {
+  aspect-ratio: 297 / 210;
+}
+
+.project-tile {
+  min-height: 0;
+}
+
+.project-tile img,
+.gallery-item img {
+  object-fit: cover;
+}
+
+.gallery-section {
+  display: grid;
+  gap: clamp(12px, 1.6vw, 24px);
+}
+
+.horizontal-gallery {
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-columns: initial;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: visible;
+  gap: clamp(16px, 2.1vw, 28px);
+  padding: 0;
+  scroll-snap-type: none;
+}
+
+.gallery-item {
+  height: auto;
+  min-height: 0;
+  scroll-snap-align: none;
+}
+
+.film-section a {
+  grid-template-columns: minmax(260px, 0.48fr) minmax(220px, 1fr);
+  align-items: stretch;
+  gap: clamp(18px, 2.4vw, 34px);
+  padding: 0;
+  border: 0;
+}
+
+.film-section figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: rgba(229, 77, 104, 0.08);
+}
+
+.film-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 240ms ease, filter 240ms ease;
+}
+
+.film-section figure span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  width: clamp(48px, 4.8vw, 78px);
+  height: clamp(48px, 4.8vw, 78px);
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: rgba(239, 241, 240, 0.78);
+  color: var(--ink);
+  font-size: clamp(0.72rem, 0.9vw, 0.95rem);
+  font-weight: 800;
+  transform: translate(-50%, -50%);
+}
+
+.film-section a:hover img {
+  filter: saturate(1.12);
+  transform: scale(1.025);
+}
+
+.film-section div {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  color: var(--ink);
+}
+
+.film-section p {
+  margin: 0;
+  font-size: clamp(0.78rem, 0.95vw, 1rem);
+  font-weight: 800;
+}
+
+@media (max-width: 980px) {
+  .horizontal-gallery,
+  .project-mosaic {
+    grid-template-columns: 1fr;
+  }
+
+  .film-section a {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Final layout lock: keep the footer navigation identical on every page. */
+@media (min-width: 760px) {
+  .desktop-nav,
+  .site-shell.route-about .desktop-nav,
+  .site-shell.route-contact .desktop-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 110;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(132px, 1fr)) minmax(140px, 0.74fr) minmax(140px, 0.74fr);
+    align-items: center;
+    justify-items: center;
+    gap: clamp(18px, 2.4vw, 46px);
+    width: 100%;
+    height: 64px;
+    padding: 0 clamp(46px, 5vw, 92px);
+    overflow: visible;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .desktop-nav button,
+  .desktop-nav .nav-category > button,
+  .site-shell.route-about .desktop-nav button,
+  .site-shell.route-contact .desktop-nav button {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--paper);
+    font-size: clamp(13px, 1.12vw, 20px);
+    font-weight: 500;
+    line-height: 1.05;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .desktop-nav .nav-category {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .desktop-nav > button:nth-last-child(2) {
+    margin-left: 0;
+  }
+
+  .site-shell {
+    padding-bottom: 64px;
+  }
+
+  .page,
+  .project-page,
+  .site-shell.route-about .about-page,
+  .site-shell.route-contact .contact-page {
+    padding-bottom: 64px;
+  }
+
+  .site-shell.route-home .home-stage {
+    padding-bottom: 64px;
+  }
+
+  .site-shell.route-home .scattered-wall {
+    transform: translateX(clamp(20px, 2.4vw, 42px));
+  }
+
+  .site-shell.route-home .home-footer-note {
+    bottom: 84px;
+  }
+}
