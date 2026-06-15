@@ -2381,3 +2381,20 @@ textarea:focus-visible {
     bottom: 84px;
   }
 }
+
+/* About page: image band should sit directly on top of the fixed nav. */
+@media (min-width: 760px) {
+  .site-shell.route-about {
+    padding-bottom: 0;
+  }
+
+  .site-shell.route-about .about-page {
+    min-height: 100svh;
+    padding-bottom: 0;
+  }
+
+  .site-shell.route-about .about-band,
+  .site-shell.route-about .portrait-frame {
+    bottom: 64px;
+  }
+}

@@ -458,7 +458,7 @@ function Contact() {
         </div>
         <div className="contact-card cv-card">
           <p>cv</p>
-          <a href="/assets/nora-wilde-cv-placeholder.pdf" download>
+          <a href="/assets/nora-wilde-cv.pdf" download>
             <Download size={18} />
             download
           </a>
