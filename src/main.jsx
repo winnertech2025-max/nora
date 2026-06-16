@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowLeft, ArrowUpRight, Download, Facebook, Instagram, Linkedin, Maximize2, Menu, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Download, Facebook, Instagram, Linkedin, Menu, X, Youtube } from 'lucide-react';
 import { categories, featuredPrints, profile, projects } from './portfolioData.js';
 import './styles.css';
 
@@ -8,6 +8,15 @@ const visibleCategorySlugs = ['fashion-costume', 'creative-direction', 'research
 const findCategory = (slug) => categories.find((category) => category.slug === slug);
 const findProject = (slug) => projects.find((project) => project.slug === slug);
 const projectsForCategory = (slug) => projects.filter((project) => project.category === slug);
+const imageSrc = (image) => (typeof image === 'string' ? image : image?.src);
+
+function youtubeEmbedUrl(url) {
+  if (!url) return '';
+  const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+  const watchMatch = url.match(/[?&]v=([^?&]+)/);
+  const id = shortMatch?.[1] || watchMatch?.[1];
+  return id ? `https://www.youtube.com/embed/${id}?autoplay=1&rel=0` : '';
+}
 
 function parseHash() {
   const hash = window.location.hash.replace(/^#\/?/, '');
@@ -70,7 +79,7 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
   return (
     <header className="site-header">
       <button className="brand" onClick={() => navigate({ name: 'home' })} aria-label="go home">
-        <img src="/assets/real/logo-drive.png" alt="nguyen minh hang nora wilde" />
+        <img src="/assets/real/home/logo-new.png" alt="nguyen minh hang nora wilde" />
         <span>nguyen minh hang</span>
       </button>
       <nav className="desktop-nav" aria-label="primary">
@@ -78,7 +87,7 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
           <NavCategoryItem key={category.slug} category={category} route={route} navigate={navigate} />
         ))}
         {navItems.map((item) => (
-          <button key={item.label} onClick={() => navigate(item.route)}>
+          <button key={item.label} className={route.name === item.route.name ? 'is-active' : ''} onClick={() => navigate(item.route)}>
             {item.label}
           </button>
         ))}
@@ -102,11 +111,13 @@ function Header({ route, menuOpen, setMenuOpen, navigate }) {
 
 function NavCategoryItem({ category, route, navigate }) {
   const categoryProjects = projectsForCategory(category.slug);
+  const activeProject = route.name === 'project' ? findProject(route.slug) : null;
+  const isActive = route.slug === category.slug || activeProject?.category === category.slug;
 
   return (
     <div className="nav-category">
       <button
-        className={route.slug === category.slug ? 'is-active' : ''}
+        className={isActive ? 'is-active' : ''}
         onClick={() => navigate({ name: 'category', slug: category.slug })}
       >
         {category.title}
@@ -206,7 +217,13 @@ function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId
       navigate(print.route);
       return;
     }
-    navigate(print.projectSlug ? { name: 'project', slug: print.projectSlug } : { name: 'category', slug: print.categorySlug });
+    if (print.projectSlug) {
+      navigate({ name: 'project', slug: print.projectSlug });
+      return;
+    }
+    if (print.categorySlug) {
+      navigate({ name: 'category', slug: print.categorySlug });
+    }
   };
 
   return (
@@ -260,7 +277,6 @@ function About() {
 function CategoryPage({ slug, navigate }) {
   const category = findCategory(slug) || categories[0];
   const categoryPrint = featuredPrints.find((print) => print.categorySlug === category.slug);
-  const [lightbox, setLightbox] = useState(null);
   const categoryProjects = projectsForCategory(category.slug);
   const standbyProjects = categoryProjects.length
     ? categoryProjects
@@ -301,10 +317,6 @@ function CategoryPage({ slug, navigate }) {
               key={project.slug}
               className={`project-tile tile-${index + 1} ${project.isStandby ? 'is-standby' : ''}`}
               onClick={() => {
-                if (category.slug === 'visual-art') {
-                  setLightbox({ images: standbyProjects.map((item) => item.cover), index });
-                  return;
-                }
                 if (!project.isStandby) navigate({ name: 'project', slug: project.slug });
               }}
             >
@@ -313,14 +325,6 @@ function CategoryPage({ slug, navigate }) {
           ))}
         </div>
       </div>
-      {lightbox && (
-        <Lightbox
-          images={lightbox.images}
-          index={lightbox.index}
-          setIndex={(index) => setLightbox({ ...lightbox, index })}
-          onClose={() => setLightbox(null)}
-        />
-      )}
     </section>
   );
 }
@@ -329,7 +333,8 @@ function ProjectPage({ slug, navigate }) {
   const project = findProject(slug) || projects[0];
   const [lightbox, setLightbox] = useState(null);
   const portfolioImages = project.gallery || [];
-  const photoshootImages = project.photoshoot || project.gallery || [];
+  const photoshootImages = project.photoshoot || [];
+  const portfolioLabel = project.category === 'visual-art' ? 'visual art' : 'portfolio pages';
 
   return (
     <section className="project-page">
@@ -345,8 +350,8 @@ function ProjectPage({ slug, navigate }) {
           <p className="project-description">{project.description}</p>
         </header>
         <article className="project-body">
-          <ImageGallery images={portfolioImages} label="portfolio pages" setLightbox={setLightbox} />
-          <ImageGallery images={photoshootImages} label="photoshoot" setLightbox={setLightbox} />
+          <ImageGallery images={portfolioImages} imageInfo={project.imageInfo} label={portfolioLabel} title={project.title} setLightbox={setLightbox} />
+          <ImageGallery images={photoshootImages} label="photoshoot" title={`${project.title} photoshoot`} setLightbox={setLightbox} />
           <FilmSection project={project} />
           <Credits credits={project.credits} />
         </article>
@@ -355,6 +360,8 @@ function ProjectPage({ slug, navigate }) {
         <Lightbox
           images={lightbox.images}
           index={lightbox.index}
+          imageInfo={lightbox.imageInfo}
+          title={lightbox.title}
           setIndex={(index) => setLightbox({ ...lightbox, index })}
           onClose={() => setLightbox(null)}
         />
@@ -363,18 +370,27 @@ function ProjectPage({ slug, navigate }) {
   );
 }
 
-function ImageGallery({ images, label, setLightbox }) {
+function ImageGallery({ images, imageInfo, label, title, setLightbox }) {
   if (!images?.length) return null;
+  const sectionClass = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
   return (
-    <section className="gallery-section">
+    <section className={`gallery-section gallery-${sectionClass}`}>
+      {label === 'photoshoot' && <h3>{label}</h3>}
       <div className="horizontal-gallery">
         {images.map((image, index) => (
-          <button key={`${label}-${image}-${index}`} className="gallery-item" onClick={() => setLightbox({ images, index })}>
-            <img src={image} alt="" loading="lazy" decoding="async" />
-            <span>
-              <Maximize2 size={15} />
-            </span>
+          <button
+            key={`${label}-${imageSrc(image)}-${index}`}
+            className={`gallery-item ${imageInfo?.[index] ? 'has-caption' : ''}`}
+            onClick={() => setLightbox({ images, imageInfo, index, title })}
+          >
+            <img src={imageSrc(image)} alt="" loading="lazy" decoding="async" />
+            {imageInfo?.[index] && (
+              <span className="gallery-caption">
+                <strong>{imageInfo[index].title}</strong>
+                <em>{imageInfo[index].meta}</em>
+              </span>
+            )}
           </button>
         ))}
       </div>
@@ -383,23 +399,36 @@ function ImageGallery({ images, label, setLightbox }) {
 }
 
 function FilmSection({ project }) {
-  const filmUrl = project.filmUrl || 'https://youtube.com/@norawilde173?si=2VXX32pGI1B3fY15';
+  const [playing, setPlaying] = useState(false);
+  if (!project.filmUrl) return null;
+  const filmUrl = project.filmUrl;
+  const embedUrl = youtubeEmbedUrl(filmUrl);
   const thumbnail = project.filmThumbnail || project.cover || project.gallery?.[0];
 
   return (
     <section className="film-section">
-      <a href={filmUrl} target="_blank" rel="noreferrer">
-        {thumbnail && (
-          <figure>
-            <img src={thumbnail} alt="" loading="lazy" decoding="async" />
-            <span>play</span>
-          </figure>
-        )}
-        <div>
+      <h3>{project.videoTitle || 'fashion film'}</h3>
+      <div className="film-player">
+        <button type="button" className="film-frame" onClick={() => (embedUrl ? setPlaying(true) : window.open(filmUrl, '_blank', 'noopener'))}>
+          {playing && embedUrl ? (
+            <iframe src={embedUrl} title={`${project.title} film`} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />
+          ) : (
+            <>
+              {thumbnail && <img src={thumbnail} alt="" loading="lazy" decoding="async" />}
+              <span className="film-play">play</span>
+              <span className="film-controls" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+            </>
+          )}
+        </button>
+        <div className="film-copy">
           <p>{project.videoTitle || 'film'}</p>
-          <strong>watch on youtube</strong>
+          <a href={filmUrl} target="_blank" rel="noreferrer">watch on youtube</a>
         </div>
-      </a>
+      </div>
     </section>
   );
 }
@@ -454,6 +483,9 @@ function Contact() {
             <a href="https://www.linkedin.com/in/hằng-nguyễn-213874316?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" aria-label="linkedin">
               <Linkedin size={34} />
             </a>
+            <a href="https://youtube.com/@norawilde173?si=2VXX32pGI1B3fY15" target="_blank" rel="noreferrer" aria-label="youtube">
+              <Youtube size={34} />
+            </a>
           </div>
         </div>
         <div className="contact-card cv-card">
@@ -468,8 +500,9 @@ function Contact() {
   );
 }
 
-function Lightbox({ images, index, setIndex, onClose }) {
+function Lightbox({ images, index, imageInfo, title, setIndex, onClose }) {
   const image = images[index];
+  const info = imageInfo?.[index];
   const previous = (event) => {
     event.stopPropagation();
     setIndex((index - 1 + images.length) % images.length);
@@ -490,12 +523,16 @@ function Lightbox({ images, index, setIndex, onClose }) {
         </button>
       )}
       <figure onClick={(event) => event.stopPropagation()}>
-        <img src={image} alt="" />
-        <figcaption>{index + 1} / {images.length}</figcaption>
+        <img src={imageSrc(image)} alt="" />
+        <figcaption>
+          <strong>{info?.title || title}</strong>
+          {info?.meta && <span>{info.meta}</span>}
+          <em>{index + 1} / {images.length}</em>
+        </figcaption>
       </figure>
       {images.length > 1 && (
         <button className="lightbox-nav lightbox-next" aria-label="next image" onClick={next}>
-          <ArrowUpRight size={22} />
+          <ArrowRight size={22} />
         </button>
       )}
     </div>
