@@ -2319,10 +2319,10 @@ textarea:focus-visible {
     bottom: 0;
     z-index: 110;
     display: grid;
-    grid-template-columns: repeat(4, max-content) minmax(120px, 1fr) max-content max-content;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(clamp(140px, 18vw, 360px), 1.35fr) repeat(2, minmax(0, 0.72fr));
     align-items: center;
-    justify-items: start;
-    column-gap: clamp(32px, 4.4vw, 86px);
+    justify-items: center;
+    column-gap: clamp(18px, 2.4vw, 42px);
     width: 100%;
     height: 64px;
     padding: 0 clamp(46px, 5vw, 92px);
@@ -2344,16 +2344,16 @@ textarea:focus-visible {
     font-size: clamp(13px, 1.12vw, 20px);
     font-weight: 500;
     line-height: 1.05;
-    text-align: left;
+    text-align: center;
     white-space: normal;
   }
 
   .desktop-nav .nav-category {
     display: grid;
-    width: max-content;
+    width: 100%;
     height: 100%;
     align-items: center;
-    justify-items: start;
+    justify-items: center;
   }
 
   .desktop-nav > button:nth-last-child(2) {
