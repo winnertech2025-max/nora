@@ -119,6 +119,100 @@ const odePhotoshoot = [
   '/assets/real/sheet/ode-photoshoot/06.png',
 ];
 
+const sheetAsset = (folder, files) => files.map((file) => `/assets/real/sheet/${folder}/${file}`);
+
+const daminePortfolio = sheetAsset('damine-tuom-tat', [
+  '01-website-porfolio-63.png',
+  '02-website-porfolio-64.png',
+  '03-website-porfolio-65.png',
+  '04-website-porfolio-66.png',
+  '05-website-porfolio-67.png',
+  '06-website-porfolio-68.png',
+  '07-website-porfolio-69.png',
+  '08-website-porfolio-70.png',
+]);
+
+const taiSaoPortfolio = sheetAsset('tai-sao-portfolio', [
+  '01-website-porfolio-76.png',
+  '02-website-porfolio-77.png',
+  '03-website-porfolio-78.png',
+  '04-website-porfolio-79.png',
+  '05-website-porfolio-80.png',
+  '06-website-porfolio-81.png',
+  '07-website-porfolio-82.png',
+  '08-website-porfolio.png',
+]);
+
+const taiSaoPhotoshoot = sheetAsset('tai-sao-photoshoot', [
+  '01-pxh8194.jpeg',
+  '02-pxh8224.jpeg',
+  '03-pxh8304.jpeg',
+  '04-pxh8326.jpeg',
+  '05-pxh8344.jpeg',
+  '06-pxh8397.jpeg',
+  '07-pxh8607.jpeg',
+  '08-pxh8615.jpeg',
+  '09-pxh8629.jpeg',
+  '10-pxh8721.jpeg',
+  '11-pxh8723.jpeg',
+  '12-pxh8744.jpeg',
+  '13-pxh8785.jpeg',
+  '14-pxh8816.jpeg',
+  '15-pxh8841.jpeg',
+]);
+
+const taiSaoStage = sheetAsset('tai-sao-stage', [
+  '01-img-9090.webp',
+  '02-img-9090-2.webp',
+  '03-img-9091.webp',
+  '04-img-9093.jpg',
+  '05-img-9096.jpg',
+  '06-img-9097.jpg',
+  '07-img-9098.jpg',
+  '08-img-9099.jpg',
+  '09-img-9100.jpg',
+  '10-img-9102.jpg',
+  '11-img-9103.jpg',
+  '12-img-9104.jpg',
+]);
+
+const creativeCyberPortfolio = sheetAsset('creative-cyber-portfolio', [
+  '01-website-porfolio-33.png',
+  '02-website-porfolio-34.png',
+  '03-website-porfolio-35.png',
+  '04-website-porfolio-36.png',
+  '05-website-porfolio-37.png',
+  '06-website-porfolio-38.png',
+  '07-website-porfolio-39.png',
+  '08-website-porfolio-40.png',
+]);
+
+const creativeOdePortfolio = sheetAsset('creative-ode-portfolio', [
+  '01-website-porfolio-50.png',
+  '02-website-porfolio-51.png',
+  '03-website-porfolio-52.png',
+  '04-website-porfolio-53.png',
+  '05-website-porfolio-54.png',
+  '06-website-porfolio-55.png',
+  '07-website-porfolio-56.png',
+  '08-website-porfolio-57.png',
+  '09-website-porfolio-59.png',
+  '10-website-porfolio-60.png',
+  '11-website-porfolio-61.png',
+]);
+
+const nothingGoldPortfolio = sheetAsset('nothing-gold-portfolio', [
+  '01-giua-mua-nuoc-phoi-trang-poster-proposal-1.png',
+  '02-giua-mua-nuoc-phoi-trang-poster-proposal-2.png',
+  '03-giua-mua-nuoc-phoi-trang-poster-proposal-3.png',
+  '04-giua-mua-nuoc-phoi-trang-poster-proposal-4.png',
+  '05-giua-mua-nuoc-phoi-trang-poster-proposal-5.png',
+  '06-giua-mua-nuoc-phoi-trang-poster-proposal-6.png',
+  '07-giua-mua-nuoc-phoi-trang-poster-proposal-7.png',
+  '08-giua-mua-nuoc-phoi-trang-poster-proposal-8.png',
+  '09-giua-mua-nuoc-phoi-trang-poster-proposal-9.png',
+]);
+
 const ballPointGallery = [
   '/assets/real/sheet/visual-ballpoint/cover.png',
   '/assets/real/sheet/visual-ballpoint/img-2175.jpeg',
@@ -257,15 +351,50 @@ export const projects = [
     ],
   },
   {
+    slug: 'damine-tuom-tat',
+    category: 'fashion-costume',
+    title: 'damine & tươm tất',
+    subtitle: 'bespoke menswear project - 2024-2025',
+    year: '2024-2025',
+    cover: daminePortfolio[0],
+    gallery: daminePortfolio,
+    description:
+      'Founded in 2024, TƯƠM TẤT is a bespoke brand focusing on creating tailored menswear inspired by personal stories from customers’ life and personality, embedding high-end techniques and customer’s engagement into the design process. In 2025, its sub-label, DAMINÉ, was created with the mission of bridging the gap between casual and formal menswear, offering tailored-inspired capsule wardrobe that caters the needs of the modern, sophisticated working men.\n\nIn my time working at these two labels, I participated in both the creative stage - concept researching, design sketching, textiles designing, and the production of the collections - materials sourcing, working with the sampling teams and manufacturers.',
+    credits: [['design, concept research & production', 'Nora Wilde']],
+  },
+  {
+    slug: 'tai-sao-chung-ta-lai-o-day',
+    category: 'fashion-costume',
+    title: 'tại sao chúng ta lại ở đây',
+    subtitle: 'theatre styling project - 2025',
+    year: '2025',
+    cover: taiSaoPortfolio[0],
+    gallery: taiSaoPortfolio,
+    photoshoot: [...taiSaoPhotoshoot, ...taiSaoStage],
+    description:
+      '"Why Are We Here?" is a play written and directed by Duy Vu, inspired by the experience of members of Xí nghiệp Điện ảnh Thăng Long\'s Acting Class.\n\nFour young actors gather in an apartment to wait for their director. They have just received a new screenplay with no instructions on how to rehearse it. As time passes, they read through the lines, discuss their recent lives, and begin practicing the scenes together. They ask, both in their own and their characters’ voices, why they are here.\n\n"Why Are We Here?" may be an unanswerable question, but it must be asked repeatedly. To continue wondering, questioning ourselves and the world, and simply surviving.',
+    credits: [
+      ['director & writer', 'Duy Vũ'],
+      ['actors', 'Minh Phương, Hoàng Phương, Minh Đức, Gia Linh, Tuệ Minh'],
+      ['lighting', 'Nguyễn Quang Vinh'],
+      ['styling', 'Nora Wilde'],
+      ['sound', 'Katherine Vu'],
+      ['set design', 'Trung Dương'],
+      ['producer', 'Nguyễn Minh Đức, Nguyễn Khánh Như'],
+      ['vocal coaching', 'Nguyễn Hà Minh, Trần Quang Huy'],
+      ['communication partner', 'Phòng đọc'],
+    ],
+  },
+  {
     slug: 'nothing-gold-can-stay-poster',
     category: 'visual-art',
     title: 'giữa mùa nước phơi trăng',
     subtitle: 'film poster illustration - 2026',
     year: '2026',
-    cover: '/assets/real/img-6961.png',
-    gallery: ['/assets/real/img-6961.png', '/assets/real/img-6962.png', '/assets/real/2.png'],
+    cover: nothingGoldPortfolio[0],
+    gallery: nothingGoldPortfolio,
     description:
-      'Giữa mùa nước phơi trăng (Nothing Gold Can Stay) is a drama short film by director Phương Bùi, made as part of her Film Directing BA. The illustration responds to the film’s memory, doubling and return through poster composition.',
+      'Giữa mùa nước phơi trăng (Nothing Gold Can Stay) is a drama short film by director Phương Bùi, made as part of her Film Directing BA. The film, inspired by the poem Bờ Mây by Bùi Giáng, tells the story of Mỹ A, a young girl returning home after years of distance to see her grandfather in what could be his final days, only to realize his memories of her have long gone, replaced by another granddaughter - Mỹ Anh.',
     credits: [['illustration', 'Nora Wilde']],
   },
   {
@@ -343,15 +472,35 @@ export const projects = [
     credits: [['photography', 'Nora Wilde']],
   },
   {
-    slug: 'creative-direction-tests',
+    slug: 'cyber-survivalism-art-direction',
     category: 'creative-direction',
-    title: 'image direction tests',
-    subtitle: 'art direction sketches',
+    title: 'cyber survivalism',
+    subtitle: 'art direction project - 2025',
     year: '2025',
-    cover: '/assets/real/nora-term-4721.png',
-    gallery: ['/assets/real/nora-term-4721.png', '/assets/real/nora-term-4728.png', '/assets/real/nora-term-4935.png'],
+    cover: creativeCyberPortfolio[0],
+    gallery: creativeCyberPortfolio,
+    photoshoot: cyberPhotoshoot,
+    videoTitle: 'fashion film',
+    filmUrl: 'https://youtu.be/vU_7N2FZ4QQ?si=qAj5qpWyS7lO3UNB',
+    filmThumbnail: creativeCyberPortfolio[0],
     description:
-      'Mood, casting, movement and composition tests for interdisciplinary shoots and stage-led image worlds.',
+      'Art direction materials for CYBER SURVIVALISM, translating the project’s retro-futurist survival language into visual world, concept boards, look development and image rhythm.',
+    credits: [['creative direction', 'Nora Wilde']],
+  },
+  {
+    slug: 'ode-to-the-city-art-direction',
+    category: 'creative-direction',
+    title: 'ode to the city',
+    subtitle: 'art direction project - 2025',
+    year: '2025',
+    cover: creativeOdePortfolio[0],
+    gallery: creativeOdePortfolio,
+    photoshoot: odePhotoshoot,
+    videoTitle: 'short film',
+    filmUrl: 'https://youtu.be/LF3Y9lXnubM?si=619JAJko72gO8fbe',
+    filmThumbnail: creativeOdePortfolio[0],
+    description:
+      'Art direction portfolio for Ode to the City, building a Hanoi-centered image world through streetwear, local music memory, punk references and textile atmosphere.',
     credits: [['creative direction', 'Nora Wilde']],
   },
 ];
