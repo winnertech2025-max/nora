@@ -1933,7 +1933,7 @@ textarea:focus-visible {
 
 .nav-project-menu button,
 .nav-project-menu span {
-  padding: 13px 0;
+  padding: 20px 0;
   color: var(--ink);
   font-size: 0.75rem;
   font-weight: 600;

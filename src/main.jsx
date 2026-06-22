@@ -125,7 +125,7 @@ function NavCategoryItem({ category, route, navigate }) {
       <div className="nav-project-menu">
         {categoryProjects.length ? (
           categoryProjects.map((project) => (
-            <button key={project.slug} onClick={() => navigate({ name: 'project', slug: project.slug })}>
+            <button key={project.slug} onClick={() => navigate({ name: 'project', slug: project.slug })} style={{padding: '12px 0'}}>
               {project.title}
             </button>
           ))
