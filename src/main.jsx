@@ -138,15 +138,26 @@ function NavCategoryItem({ category, route, navigate }) {
 }
 
 function Home({ navigate }) {
+  const [statementLightbox, setStatementLightbox] = useState(null);
+
   return (
     <section className="home-stage">
-      <ScatteredWall navigate={navigate} />
+      <ScatteredWall navigate={navigate} openStatement={setStatementLightbox} />
       <p className="home-footer-note">interdisciplinary fashion creative</p>
+      {statementLightbox && (
+        <Lightbox
+          images={[statementLightbox.image]}
+          index={0}
+          title={statementLightbox.title}
+          setIndex={() => {}}
+          onClose={() => setStatementLightbox(null)}
+        />
+      )}
     </section>
   );
 }
 
-function ScatteredWall({ navigate }) {
+function ScatteredWall({ navigate, openStatement }) {
   const [selectedPrintId, setSelectedPrintId] = useState(null);
 
   return (
@@ -159,13 +170,14 @@ function ScatteredWall({ navigate }) {
           isSelected={selectedPrintId === print.id}
           navigate={navigate}
           setSelectedPrintId={setSelectedPrintId}
+          openStatement={openStatement}
         />
       ))}
     </div>
   );
 }
 
-function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId }) {
+function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId, openStatement }) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [start, setStart] = useState(null);
@@ -207,6 +219,11 @@ function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId
       window.setTimeout(() => {
         movedRef.current = false;
       }, 0);
+      return;
+    }
+    if (print.lightboxOnly) {
+      setSelectedPrintId(print.id);
+      openStatement?.({ image: print.image, title: print.title });
       return;
     }
     if (!isSelected) {
@@ -424,8 +441,7 @@ function FilmSection({ project }) {
             </>
           )}
         </button>
-        <div className="film-copy">
-          <p>{project.videoTitle || 'film'}</p>
+        <div className="film-copy film-copy-link-only">
           <a href={filmUrl} target="_blank" rel="noreferrer">watch on youtube</a>
         </div>
       </div>

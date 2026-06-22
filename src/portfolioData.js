@@ -111,12 +111,12 @@ const odePortfolio = [
 ];
 
 const odePhotoshoot = [
-  '/assets/real/sheet/ode-photoshoot/01.png',
-  '/assets/real/sheet/ode-photoshoot/02.png',
-  '/assets/real/sheet/ode-photoshoot/03.png',
-  '/assets/real/sheet/ode-photoshoot/04.png',
-  '/assets/real/sheet/ode-photoshoot/05.png',
-  '/assets/real/sheet/ode-photoshoot/06.png',
+  '/assets/real/sheet/ode-photoshoot-web/01.png',
+  '/assets/real/sheet/ode-photoshoot-web/02.png',
+  '/assets/real/sheet/ode-photoshoot-web/03.png',
+  '/assets/real/sheet/ode-photoshoot-web/04.png',
+  '/assets/real/sheet/ode-photoshoot-web/05.png',
+  '/assets/real/sheet/ode-photoshoot-web/06.png',
 ];
 
 const sheetAsset = (folder, files) => files.map((file) => `/assets/real/sheet/${folder}/${file}`);
@@ -133,6 +133,7 @@ const daminePortfolio = sheetAsset('damine-tuom-tat', [
 ]);
 
 const taiSaoPortfolio = sheetAsset('tai-sao-portfolio', [
+  '08-website-porfolio.png',
   '01-website-porfolio-76.png',
   '02-website-porfolio-77.png',
   '03-website-porfolio-78.png',
@@ -140,7 +141,6 @@ const taiSaoPortfolio = sheetAsset('tai-sao-portfolio', [
   '05-website-porfolio-80.png',
   '06-website-porfolio-81.png',
   '07-website-porfolio-82.png',
-  '08-website-porfolio.png',
 ]);
 
 const taiSaoPhotoshoot = sheetAsset('tai-sao-photoshoot', [
@@ -214,40 +214,42 @@ const nothingGoldPortfolio = sheetAsset('nothing-gold-portfolio', [
 ]);
 
 const ballPointGallery = [
-  '/assets/real/sheet/visual-ballpoint/cover.png',
-  '/assets/real/sheet/visual-ballpoint/img-2175.jpeg',
-  '/assets/real/sheet/visual-ballpoint/img-2176.jpeg',
-  '/assets/real/sheet/visual-ballpoint/img-2177.jpeg',
-  '/assets/real/sheet/visual-ballpoint/img-2517-original.jpeg',
-  '/assets/real/sheet/visual-ballpoint/img-5188.jpeg',
+  '/assets/real/sheet/visual-ballpoint-v2/01.png',
+  '/assets/real/sheet/visual-ballpoint-v2/02.png',
+  '/assets/real/sheet/visual-ballpoint-v2/03.png',
+  '/assets/real/sheet/visual-ballpoint-v2/04.png',
+  '/assets/real/sheet/visual-ballpoint-v2/05.png',
+  '/assets/real/sheet/visual-ballpoint-v2/06.png',
+  '/assets/real/sheet/visual-ballpoint-v2/07.png',
+  '/assets/real/sheet/visual-ballpoint-v2/08.png',
+  '/assets/real/sheet/visual-ballpoint-v2/09.png',
+  '/assets/real/sheet/visual-ballpoint-v2/10.png',
+  '/assets/real/sheet/visual-ballpoint-v2/11.png',
 ];
 
-const ballPointInfo = [
-  { title: 'ball-point pen series', meta: 'cover, 2021-2023' },
-  { title: 'ball-point pen drawing', meta: 'pen on paper, 2021-2023' },
-  { title: 'ball-point pen drawing', meta: 'pen on paper, 2021-2023' },
-  { title: 'ball-point pen drawing', meta: 'pen on paper, 2021-2023' },
-  { title: 'ball-point pen drawing', meta: 'pen on paper, 2021-2023' },
-  { title: 'ball-point pen drawing', meta: 'pen on paper, 2021-2023' },
-];
+const ballPointInfo = ballPointGallery.map((_, index) => ({
+  title: index === 0 ? 'ball-point pen series' : 'ball-point pen drawing',
+  meta: index === 0 ? 'cover, 2021-2023' : 'pen on paper, 2021-2023',
+}));
 
 const coloredGallery = [
-  '/assets/real/sheet/visual-colored/cover.png',
-  '/assets/real/sheet/visual-colored/img-0655-original.jpeg',
-  '/assets/real/sheet/visual-colored/img-1593-original.jpeg',
-  '/assets/real/sheet/visual-colored/img-2181.jpeg',
-  '/assets/real/sheet/visual-colored/img-2182.jpeg',
-  '/assets/real/sheet/visual-colored/img-2183.jpeg',
+  '/assets/real/sheet/visual-colored-v2/01.png',
+  '/assets/real/sheet/visual-colored-v2/02.png',
+  '/assets/real/sheet/visual-colored-v2/03.png',
+  '/assets/real/sheet/visual-colored-v2/04.png',
+  '/assets/real/sheet/visual-colored-v2/05.png',
+  '/assets/real/sheet/visual-colored-v2/06.png',
+  '/assets/real/sheet/visual-colored-v2/07.png',
+  '/assets/real/sheet/visual-colored-v2/08.png',
+  '/assets/real/sheet/visual-colored-v2/09.png',
+  '/assets/real/sheet/visual-colored-v2/10.png',
+  '/assets/real/sheet/visual-colored-v2/11.png',
 ];
 
-const coloredInfo = [
-  { title: 'colored series', meta: 'cover, 2021-2024' },
-  { title: 'colored study', meta: 'acrylic / watercolor, 2021-2024' },
-  { title: 'colored study', meta: 'acrylic / watercolor, 2021-2024' },
-  { title: 'colored study', meta: 'acrylic / watercolor, 2021-2024' },
-  { title: 'colored study', meta: 'acrylic / watercolor, 2021-2024' },
-  { title: 'colored study', meta: 'acrylic / watercolor, 2021-2024' },
-];
+const coloredInfo = coloredGallery.map((_, index) => ({
+  title: index === 0 ? 'colored series' : 'colored study',
+  meta: index === 0 ? 'cover, 2021-2024' : 'acrylic / watercolor, 2021-2024',
+}));
 
 export const projects = [
   {
@@ -485,7 +487,20 @@ export const projects = [
     filmThumbnail: creativeCyberPortfolio[0],
     description:
       'Art direction materials for CYBER SURVIVALISM, translating the project’s retro-futurist survival language into visual world, concept boards, look development and image rhythm.',
-    credits: [['creative direction', 'Nora Wilde']],
+    credits: [
+      ['creative director, fashion designer', 'Nora Wilde'],
+      ['instructors', 'Lisa Shawgi, Tu Dang'],
+      ['starring', 'Dung Le'],
+      ['photography & lighting', 'Vu Viet Manh'],
+      ['videographer', 'Hong Minh'],
+      ['editor & vfx', 'Vu Ngoc'],
+      ['composer', 'Katherine Vu'],
+      ['m.u.a', 'Hiep Ciao'],
+      ['technical consultant', 'Grace Nguyen'],
+      ['projector content & logistic support', 'Dang Khoi Hoang'],
+      ['on-set support', 'Dang Khoi Hoang, Vu Ngoc, Dinh Bao Thuong'],
+      ['special thanks', 'Grace Nguyen, Pham Khanh Linh, Vinh Nguyen, Bui Manh Duong'],
+    ],
   },
   {
     slug: 'ode-to-the-city-art-direction',
@@ -501,7 +516,19 @@ export const projects = [
     filmThumbnail: creativeOdePortfolio[0],
     description:
       'Art direction portfolio for Ode to the City, building a Hanoi-centered image world through streetwear, local music memory, punk references and textile atmosphere.',
-    credits: [['creative direction', 'Nora Wilde']],
+    credits: [
+      ['creative director, fashion designer', 'Nora Wilde'],
+      ['instructors', 'Lisa Shawgi, Tu Dang'],
+      ['animation', 'Nora Wilde, from photos taken by Vu Viet Manh'],
+      ['starring', 'Nam Thien'],
+      ['photographer', 'Vu Viet Manh'],
+      ['venue, lighting & props', 'Doan Hoai Nam & HUB Venue'],
+      ['editor & vfx', 'Vu Ngoc'],
+      ['sound designer', 'Katherine Vu'],
+      ['graphic designer', 'Cao Sinh Tu'],
+      ['m.u.a', 'Hiep Ciao'],
+      ['support', 'Alice To, Laine'],
+    ],
   },
 ];
 
@@ -532,11 +559,12 @@ export const featuredPrints = [
     id: 'artist-statement',
     title: 'artist statement',
     image: '/assets/real/home/artist-statement.png',
-    x: -10,
-    y: 430,
+    x: -22,
+    y: 410,
     rotate: 0,
-    width: 250,
+    width: 330,
     z: 3,
+    lightboxOnly: true,
   },
   {
     id: 'research',

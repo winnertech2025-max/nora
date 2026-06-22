@@ -1906,8 +1906,8 @@ textarea:focus-visible {
   z-index: 140;
   display: grid;
   min-width: 190px;
-  gap: 4px;
-  padding: 10px 12px;
+  gap: 0;
+  padding: 8px 14px;
   border: 1px solid rgba(229, 77, 104, 0.42);
   background: rgba(239, 241, 240, 0.95);
   box-shadow: 0 16px 44px rgba(35, 25, 25, 0.12);
@@ -1926,12 +1926,18 @@ textarea:focus-visible {
 
 .nav-project-menu button,
 .nav-project-menu span {
-  padding: 5px 0;
+  padding: 9px 0;
   color: var(--ink);
   font-size: 0.75rem;
   font-weight: 600;
+  line-height: 1.18;
   text-align: left;
   white-space: normal;
+}
+
+.nav-project-menu button + button,
+.nav-project-menu span + span {
+  border-top: 1px solid rgba(255, 255, 255, 0.34);
 }
 
 .home-footer-note {
@@ -2418,6 +2424,12 @@ textarea:focus-visible {
 .nav-project-menu button,
 .nav-project-menu span {
   color: var(--paper);
+}
+
+.nav-project-menu button:hover,
+.nav-project-menu button:focus-visible {
+  color: var(--paper);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.88);
 }
 
 .desktop-nav button.is-active,
