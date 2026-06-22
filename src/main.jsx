@@ -159,6 +159,12 @@ function Home({ navigate }) {
 
 function ScatteredWall({ navigate, openStatement }) {
   const [selectedPrintId, setSelectedPrintId] = useState(null);
+  const [zoomedPrintId, setZoomedPrintId] = useState(null);
+
+  const selectPrint = (id) => {
+    setSelectedPrintId(id);
+    setZoomedPrintId(null);
+  };
 
   return (
     <div className="scattered-wall" aria-label="interactive portfolio categories">
@@ -168,8 +174,10 @@ function ScatteredWall({ navigate, openStatement }) {
           print={print}
           index={index}
           isSelected={selectedPrintId === print.id}
+          isZoomed={zoomedPrintId === print.id}
           navigate={navigate}
-          setSelectedPrintId={setSelectedPrintId}
+          setSelectedPrintId={selectPrint}
+          setZoomedPrintId={setZoomedPrintId}
           openStatement={openStatement}
         />
       ))}
@@ -177,7 +185,7 @@ function ScatteredWall({ navigate, openStatement }) {
   );
 }
 
-function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId, openStatement }) {
+function DraggablePrint({ print, index, isSelected, isZoomed, navigate, setSelectedPrintId, setZoomedPrintId, openStatement }) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [start, setStart] = useState(null);
@@ -230,7 +238,7 @@ function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId
       return;
     }
     setSelectedPrintId(print.id);
-    openStatement?.({ image: print.image, title: print.title });
+    setZoomedPrintId((currentId) => (currentId === print.id ? null : print.id));
   };
 
   const selectPrint = () => {
@@ -267,7 +275,7 @@ function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId
 
   return (
     <button
-      className={`print-card print-${index + 1} ${isSelected ? 'is-selected' : ''} ${dragging ? 'dragging' : ''}`}
+      className={`print-card print-${index + 1} ${isSelected ? 'is-selected' : ''} ${isZoomed ? 'is-zoomed' : ''} ${dragging ? 'dragging' : ''}`}
       style={{
         '--x': `${print.x + offset.x}px`,
         '--y': `${print.y + offset.y}px`,

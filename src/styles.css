@@ -1971,6 +1971,16 @@ textarea:focus-visible {
   pointer-events: auto;
 }
 
+.print-card.is-selected.is-zoomed {
+  z-index: 120;
+  filter: saturate(1.18);
+  transform: translate3d(var(--x), calc(var(--y) - 52px), 0) rotate(calc(var(--r) * 0.24)) scale(1.34);
+}
+
+.print-card.is-selected.is-zoomed img {
+  box-shadow: 0 34px 92px rgba(48, 24, 23, 0.34);
+}
+
 .category-page,
 .project-page {
   max-width: 1180px;
