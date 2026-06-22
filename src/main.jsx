@@ -214,22 +214,35 @@ function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId
     setStart(null);
   };
 
-  const open = () => {
+  const resetMovedFlag = () => {
     if (movedRef.current) {
       window.setTimeout(() => {
         movedRef.current = false;
       }, 0);
+      return true;
+    }
+    return false;
+  };
+
+  const zoomPrint = (event) => {
+    event?.preventDefault();
+    if (resetMovedFlag()) {
       return;
     }
-    if (print.lightboxOnly) {
-      setSelectedPrintId(print.id);
-      openStatement?.({ image: print.image, title: print.title });
+    setSelectedPrintId(print.id);
+    openStatement?.({ image: print.image, title: print.title });
+  };
+
+  const selectPrint = () => {
+    if (resetMovedFlag()) {
       return;
     }
-    if (!isSelected) {
-      setSelectedPrintId(print.id);
-      return;
-    }
+    setSelectedPrintId(print.id);
+  };
+
+  const navigateFromTitle = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
     if (print.route) {
       navigate(print.route);
       return;
@@ -240,6 +253,15 @@ function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId
     }
     if (print.categorySlug) {
       navigate({ name: 'category', slug: print.categorySlug });
+      return;
+    }
+    setSelectedPrintId(print.id);
+    openStatement?.({ image: print.image, title: print.title });
+  };
+
+  const handleTitleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      navigateFromTitle(event);
     }
   };
 
@@ -257,10 +279,18 @@ function DraggablePrint({ print, index, isSelected, navigate, setSelectedPrintId
       onPointerMove={moveDrag}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
-      onClick={open}
+      onClick={selectPrint}
+      onDoubleClick={zoomPrint}
     >
       <img src={print.image} alt="" draggable="false" decoding="async" />
-      <span className="print-title">
+      <span
+        className="print-title"
+        role="link"
+        tabIndex={isSelected ? 0 : -1}
+        onClick={navigateFromTitle}
+        onDoubleClick={(event) => event.stopPropagation()}
+        onKeyDown={handleTitleKeyDown}
+      >
         {print.title}
         <ArrowUpRight size={18} />
       </span>
