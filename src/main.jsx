@@ -163,7 +163,7 @@ function ScatteredWall({ navigate, openStatement }) {
 
   const selectPrint = (id) => {
     setSelectedPrintId(id);
-    setZoomedPrintId(null);
+    setZoomedPrintId((currentId) => (currentId && currentId !== id ? null : currentId));
   };
 
   return (
@@ -273,6 +273,8 @@ function DraggablePrint({ print, index, isSelected, isZoomed, navigate, setSelec
     }
   };
 
+  const zoomScale = Math.min(Math.max((window.innerWidth * 0.8) / print.width, 1.65), 4.4);
+
   return (
     <button
       className={`print-card print-${index + 1} ${isSelected ? 'is-selected' : ''} ${isZoomed ? 'is-zoomed' : ''} ${dragging ? 'dragging' : ''}`}
@@ -281,6 +283,7 @@ function DraggablePrint({ print, index, isSelected, isZoomed, navigate, setSelec
         '--y': `${print.y + offset.y}px`,
         '--r': `${print.rotate}deg`,
         '--w': `${print.width}px`,
+        '--zoom-scale': zoomScale,
         '--z': print.z,
       }}
       onPointerDown={beginDrag}
