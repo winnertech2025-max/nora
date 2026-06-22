@@ -159,11 +159,11 @@ function Home({ navigate }) {
 
 function ScatteredWall({ navigate, openStatement }) {
   const [selectedPrintId, setSelectedPrintId] = useState(null);
-  const [zoomedPrintId, setZoomedPrintId] = useState(null);
+  const [zoomedPrint, setZoomedPrint] = useState(null);
 
   const selectPrint = (id) => {
     setSelectedPrintId(id);
-    setZoomedPrintId((currentId) => (currentId && currentId !== id ? null : currentId));
+    setZoomedPrint((current) => (current?.id && current.id !== id ? null : current));
   };
 
   return (
@@ -174,10 +174,11 @@ function ScatteredWall({ navigate, openStatement }) {
           print={print}
           index={index}
           isSelected={selectedPrintId === print.id}
-          isZoomed={zoomedPrintId === print.id}
+          isZoomed={zoomedPrint?.id === print.id}
+          zoomScale={zoomedPrint?.id === print.id ? zoomedPrint.scale : 2}
           navigate={navigate}
           setSelectedPrintId={selectPrint}
-          setZoomedPrintId={setZoomedPrintId}
+          setZoomedPrint={setZoomedPrint}
           openStatement={openStatement}
         />
       ))}
@@ -185,10 +186,11 @@ function ScatteredWall({ navigate, openStatement }) {
   );
 }
 
-function DraggablePrint({ print, index, isSelected, isZoomed, navigate, setSelectedPrintId, setZoomedPrintId, openStatement }) {
+function DraggablePrint({ print, index, isSelected, isZoomed, zoomScale, navigate, setSelectedPrintId, setZoomedPrint, openStatement }) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [start, setStart] = useState(null);
+  const buttonRef = useRef(null);
   const movedRef = useRef(false);
 
   const beginDrag = (event) => {
@@ -238,7 +240,20 @@ function DraggablePrint({ print, index, isSelected, isZoomed, navigate, setSelec
       return;
     }
     setSelectedPrintId(print.id);
-    setZoomedPrintId((currentId) => (currentId === print.id ? null : print.id));
+    setZoomedPrint((current) => {
+      if (current?.id === print.id) {
+        return null;
+      }
+      const bounds = buttonRef.current?.getBoundingClientRect();
+      const baseWidth = Math.max(bounds?.width || print.width, 1);
+      const baseHeight = Math.max(bounds?.height || print.width, 1);
+      const fitScale = Math.min(
+        (window.innerWidth * 0.78) / baseWidth,
+        (window.innerHeight * 0.68) / baseHeight,
+        3.8
+      );
+      return { id: print.id, scale: Math.max(fitScale, 1.18) };
+    });
   };
 
   const selectPrint = () => {
@@ -273,10 +288,9 @@ function DraggablePrint({ print, index, isSelected, isZoomed, navigate, setSelec
     }
   };
 
-  const zoomScale = Math.min(Math.max((window.innerWidth * 0.8) / print.width, 1.65), 4.4);
-
   return (
     <button
+      ref={buttonRef}
       className={`print-card print-${index + 1} ${isSelected ? 'is-selected' : ''} ${isZoomed ? 'is-zoomed' : ''} ${dragging ? 'dragging' : ''}`}
       style={{
         '--x': `${print.x + offset.x}px`,
